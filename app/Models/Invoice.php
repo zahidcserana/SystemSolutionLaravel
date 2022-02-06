@@ -30,10 +30,6 @@ class Invoice extends Model
         self::BILL_TYPE_ONETIME => 'Onetime',
     ];
 
-    // public function getForDateAttribute() {
-    //     return "Appril";
-    // }
-
     public function customer()
     {
         return $this->belongsTo(Customer::class)->withTrashed();

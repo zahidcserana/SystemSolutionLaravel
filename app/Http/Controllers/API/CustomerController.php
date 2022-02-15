@@ -6,20 +6,23 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Resources\CustomerResource;
 use App\Http\Resources\CustomerCollection;
+use App\Http\Resources\CustomerTableResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class CustomerController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $customers = Customer::paginate();
 
         return new CustomerCollection($customers);
+    }
+
+    public function list()
+    {
+        $customers = Customer::get();
+
+        return CustomerTableResource::collection($customers);
     }
 
     /**

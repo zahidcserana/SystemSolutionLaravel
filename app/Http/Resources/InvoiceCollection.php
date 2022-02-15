@@ -14,6 +14,6 @@ class InvoiceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return InvoiceResource::collection($this->collection);
     }
 }

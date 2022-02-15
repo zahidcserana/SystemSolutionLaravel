@@ -9,6 +9,7 @@ use App\Http\Requests\Invoice\StoreRequest;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\Invoice\UpdateRequest;
 use App\Http\Resources\InvoiceResource;
+use Illuminate\Support\Arr;
 
 class InvoiceController extends BaseController
 {
@@ -17,9 +18,10 @@ class InvoiceController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::paginate();
+        $query = $request->query();
+        $invoices = Invoice::latest()->paginate(Arr::get($query, 'limit', 20));
 
         return new InvoiceCollection($invoices);
     }
@@ -42,11 +44,11 @@ class InvoiceController extends BaseController
      */
     public function store(StoreRequest $request)
     {
-        return response()->json(
-            new InvoiceResource(
-                app()->invoice->store($request)
-            )
+        $invoice = new InvoiceResource(
+            app()->invoice->store($request)
         );
+
+        return $this->sendResponse($invoice, 'Invoice saved successfully.');
     }
 
     /**
@@ -57,7 +59,7 @@ class InvoiceController extends BaseController
      */
     public function show(Invoice $invoice)
     {
-        //
+        return new InvoiceResource($invoice);
     }
 
     /**
@@ -68,7 +70,7 @@ class InvoiceController extends BaseController
      */
     public function edit(Invoice $invoice)
     {
-        //
+        return new InvoiceResource($invoice);
     }
 
     /**
@@ -80,11 +82,11 @@ class InvoiceController extends BaseController
      */
     public function update(UpdateRequest $request, Invoice $invoice)
     {
-        return response()->json(
-            new InvoiceResource(
-                app()->invoice->update($request, $invoice)
-            )
+        $invoice = new InvoiceResource(
+            app()->invoice->update($request, $invoice)
         );
+
+        return $this->sendResponse($invoice, 'Invoice successfully updated.');
     }
 
     /**
@@ -97,6 +99,6 @@ class InvoiceController extends BaseController
     {
         $invoice->delete();
 
-        return back()->with('success', 'Invoice successfully deleted.');
+        return $this->sendResponse($invoice, 'Invoice successfully deleted.');
     }
 }

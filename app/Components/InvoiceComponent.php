@@ -15,6 +15,8 @@ class InvoiceComponent extends BaseComponent
         $input = $request->validated();
 
         $invoice = Invoice::create($input);
+        $invoice->setStatus();
+        $invoice->refresh();
 
         return $invoice;
     }
@@ -24,6 +26,8 @@ class InvoiceComponent extends BaseComponent
         $input = $request->validated();
 
         $invoice->update($input);
+        $invoice->setStatus();
+        $invoice->refresh();
 
         return $invoice;
     }

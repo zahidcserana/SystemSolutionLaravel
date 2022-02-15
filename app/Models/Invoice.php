@@ -15,6 +15,10 @@ class Invoice extends Model
     const BILL_TYPE_YEARLY = 'yearly';
     const BILL_TYPE_ONETIME = 'onetime';
 
+    const STATUS_PENDING = 'pending';
+    const STATUS_DUE = 'due';
+    const STATUS_PAID = 'paid';
+
     protected $fillable = [
         'customer_id',
         'type',
@@ -29,6 +33,14 @@ class Invoice extends Model
         self::BILL_TYPE_YEARLY => 'Yearly',
         self::BILL_TYPE_ONETIME => 'Onetime',
     ];
+
+    public function setStatus()
+    {
+        $status = $this->paid == 0 ? 'pending' : ($this->paid == $this->amount ? 'paid' : 'due');
+
+        $this->status = $status;
+        $this->save();
+    }
 
     public function customer()
     {

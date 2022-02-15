@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Requests\Customer\StoreRequest;
 
 class CustomerController extends Controller
 {
@@ -17,25 +18,23 @@ class CustomerController extends Controller
         return view('customers.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $input = $request->validated();
+
+        $user = Customer::create($input);
+
+        return redirect()->route('customers.index')->with('success', 'Customer successfully added.');
+    }
+
+    public function edit(Customer $customer)
+    {
+        return view('customers.edit', ['customer' => $customer]);
     }
 
     /**
@@ -48,18 +47,6 @@ class CustomerController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Customer $customer)
-    {
-        dd($customer);
-    }
-
 
     public function update(Request $request, Customer $customer)
     {

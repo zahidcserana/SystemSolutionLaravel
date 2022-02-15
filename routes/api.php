@@ -26,4 +26,5 @@ Route::post('login', [RegisterController::class, 'login']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::resource('customer', CustomerController::class);
     Route::resource('invoice', InvoiceController::class);
+    Route::get('customers', [CustomerController::class, 'list']);
 });

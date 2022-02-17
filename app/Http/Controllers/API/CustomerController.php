@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Customer;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Http\Resources\CustomerResource;
 use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerTableResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class CustomerController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::paginate();
+        $query = $request->query();
+        $collection = Customer::query();
+
+        $collection->when($request->term, function ($q) use ($request) {
+            return $q->where('name', 'like', '%' . $request['term'] . '%')
+                ->orWhere('email', 'like', '%' . $request['term'] . '%')
+                ->orWhere('mobile', 'like', '%' . $request['term'] . '%');
+        });
+
+        $customers = $collection->latest('id')->paginate(Arr::get($query, 'limit', 20));
 
         return new CustomerCollection($customers);
     }

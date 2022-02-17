@@ -8,11 +8,6 @@ use App\Http\Requests\Customer\StoreRequest;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('customers.index');
@@ -20,21 +15,12 @@ class CustomerController extends Controller
 
     public function create()
     {
-        return view('customers.create');
-    }
-
-    public function store(StoreRequest $request)
-    {
-        $input = $request->validated();
-
-        $user = Customer::create($input);
-
-        return redirect()->route('customers.index')->with('success', 'Customer successfully added.');
+        return view('customers.form');
     }
 
     public function edit(Customer $customer)
     {
-        return view('customers.edit', ['customer' => $customer]);
+        return view('customers.form', ['customer' => $customer]);
     }
 
     /**
@@ -45,7 +31,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        dd($customer);
     }
 
     public function update(Request $request, Customer $customer)

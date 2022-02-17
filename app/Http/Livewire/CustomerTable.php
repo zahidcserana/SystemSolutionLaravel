@@ -195,10 +195,11 @@ class CustomerTable extends PowerGridComponent
         $canClickButton = true;
 
         return [
-            // Button::add('edit')
-            //     ->caption(__('Edit'))
-            //     ->class('bg-indigo-500 text-white')
-            //     ->route('customer.edit', ['customer' => 'id']),
+            Button::add('edit')
+                ->caption(__('Edit'))
+                ->class('bg-indigo-500 text-white')
+                ->target('_self')
+                ->route('customer.edit', ['customer' => 'id']),
 
             Button::add('edit-customer')
                 ->caption('Edit')

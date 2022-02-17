@@ -21,7 +21,27 @@ class InvoiceController extends BaseController
     public function index(Request $request)
     {
         $query = $request->query();
-        $invoices = Invoice::latest()->paginate(Arr::get($query, 'limit', 20));
+        $collection = Invoice::query();
+
+        $collection->when($request->status, function ($q) use ($request) {
+            return $q->where('status', $request['status']);
+        });
+        $collection->when($request->customer_id, function ($q) use ($request) {
+            return $q->where('customer_id', $request['customer_id']);
+        });
+        $collection->when($request->invoice_no, function ($q) use ($request) {
+            return $q->where('invoice_no', 'like', '%' . $request['invoice_no'] . '%');
+        });
+
+        if (!empty($request->daterange)) {
+            $daterange = explode(' - ', $request->daterange);
+            $dateS = date('Y-m-d', strtotime($daterange[0]));
+            $dateE = !empty($daterange[1]) ? date('Y-m-d', strtotime($daterange[1])) : $dateS;
+
+            $collection = $collection->whereDate('created_at', '>=', $dateS)->whereDate('created_at', '<=', $dateE);
+        }
+
+        $invoices = $collection->latest('id')->paginate(Arr::get($query, 'limit', 20));
 
         return new InvoiceCollection($invoices);
     }

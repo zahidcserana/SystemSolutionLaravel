@@ -23,7 +23,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('customer', CustomerController::class);
-Route::resource('invoice', InvoiceController::class);
-
 require __DIR__ . '/auth.php';
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('customer', CustomerController::class);
+    Route::resource('invoice', InvoiceController::class);
+});

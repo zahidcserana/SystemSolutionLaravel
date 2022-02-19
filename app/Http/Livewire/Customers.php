@@ -10,6 +10,7 @@ class Customers extends Component
 {
     public $customer_id;
     public Customer $customer;
+    public $update = false;
 
     protected $rules = [
         'customer.name' => ['sometimes'],
@@ -33,6 +34,7 @@ class Customers extends Component
         if (empty($this->customer->id)) {
             return view('livewire.customer.create');
         } else {
+            $this->update = true;
             return view('livewire.customer.update');
         }
     }

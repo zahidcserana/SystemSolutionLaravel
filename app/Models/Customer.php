@@ -19,7 +19,7 @@ class Customer extends Model
     const BILL_TYPES = [
         self::BILL_TYPE_MONTHLY => 'Monthly',
         self::BILL_TYPE_YEARLY => 'Yearly',
-        self::BILL_TYPE_BOTH => 'both',
+        self::BILL_TYPE_BOTH => 'Both',
         self::BILL_TYPE_ONETIME => 'Onetime',
     ];
 

@@ -11,6 +11,7 @@ class Customers extends Component
     public $customer_id;
     public Customer $customer;
     public $update = false;
+    public $billTypes;
 
     protected $rules = [
         'customer.name' => ['sometimes'],
@@ -31,6 +32,7 @@ class Customers extends Component
 
     public function render()
     {
+        $this->billTypes = Customer::BILL_TYPES;
         if (empty($this->customer->id)) {
             return view('livewire.customer.create');
         } else {

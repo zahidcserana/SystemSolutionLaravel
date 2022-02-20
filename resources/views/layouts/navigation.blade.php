@@ -21,6 +21,19 @@
                         {{ __('Customer') }}
                     </x-nav-link>
                 </div>
+                <div style="font-size: 0.875rem; font-weight: 500; padding-top: 15px;" class="nav-item dropdown hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Settings
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <x-mynav-link class="dropdown-item" :href="route('invoice.index')">
+                            {{ __('Invoice') }}
+                        </x-mynav-link>
+                        <x-mynav-link class="dropdown-item" :href="route('customer.index')">
+                            {{ __('Customer') }}
+                        </x-mynav-link>
+                    </div>
+                </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('invoice.index')" :active="request()->routeIs('invoice.index')">
                         {{ __('Invoice') }}

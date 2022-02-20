@@ -5,7 +5,7 @@ Manage clients, invoices & payments and make reports
 ### Next task list
 
 - **[Invoice](view by id)**
-- **[Customer](page design for create,update)**
+- **[Customer](Add/Edit: Select2)**
 
 ## API
 

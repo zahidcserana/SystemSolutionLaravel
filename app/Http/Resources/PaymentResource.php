@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerResource extends JsonResource
+class PaymentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class CustomerResource extends JsonResource
     {
         $resource = parent::toArray($request);
 
-        $resource['due_invoices'] = InvoiceTableResource::collection($this->dueInvoices);
+        $resource['customer'] = new CustomerResource($this->customer);
+        unset($resource['customer_id']);
 
         return $resource;
     }

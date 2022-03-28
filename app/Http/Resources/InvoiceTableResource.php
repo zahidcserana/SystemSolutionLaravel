@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerResource extends JsonResource
+class InvoiceTableResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,9 +14,13 @@ class CustomerResource extends JsonResource
      */
     public function toArray($request)
     {
-        $resource = parent::toArray($request);
+        unset($resource);
 
-        $resource['due_invoices'] = InvoiceTableResource::collection($this->dueInvoices);
+        $resource['id'] = $this->id;
+        $resource['amount'] = $this->amount;
+        $resource['paid'] = $this->paid;
+        $resource['due'] = $this->amount - $this->paid;
+        $resource['status'] = $this->status;
 
         return $resource;
     }

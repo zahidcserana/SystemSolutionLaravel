@@ -30,4 +30,9 @@ class Customer extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function dueInvoices()
+    {
+        return $this->invoices()->where('status', '<>', Invoice::STATUS_PAID);
+    }
 }

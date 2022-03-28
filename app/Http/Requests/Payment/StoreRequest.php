@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Invoice;
+namespace App\Http\Requests\Payment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,14 +24,20 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => [
+            'method' => [
                 'sometimes'
             ],
             'customer_id' => [
                 'required',
                 'exists:customers,id,deleted_at,NULL'
             ],
-            'paid' => [
+            'payload' => [
+                'sometimes'
+            ],
+            'remarks' => [
+                'sometimes'
+            ],
+            'logs' => [
                 'sometimes'
             ],
             'amount' => [
@@ -39,7 +45,17 @@ class StoreRequest extends FormRequest
                 'numeric',
                 'gte:0'
             ],
-            'for_date' => [
+            'adjust' => [
+                'nullable',
+                'numeric',
+                'gte:0'
+            ],
+            'dues' => [
+                'nullable',
+                'numeric',
+                'gte:0'
+            ],
+            'payment_date' => [
                 'required',
                 'date_format:Y-m-d'
             ]

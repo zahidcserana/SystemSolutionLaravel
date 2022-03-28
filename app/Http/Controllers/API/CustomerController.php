@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\CustomerCollection;
 use App\Http\Resources\CustomerTableResource;
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Http\Resources\CustomerResource;
 
 class CustomerController extends BaseController
 {
@@ -63,7 +64,7 @@ class CustomerController extends BaseController
      */
     public function show(Customer $customer)
     {
-        //
+        return new CustomerResource($customer);
     }
 
     /**

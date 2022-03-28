@@ -35,7 +35,9 @@ class UpdateRequest extends FormRequest
                 'sometimes'
             ],
             'amount' => [
-                'required'
+                'required',
+                'numeric',
+                'gte:0'
             ],
             'for_date' => [
                 'required',

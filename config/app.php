@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \App\Providers\InvoiceComponentServiceProvider::class,
+        \App\Providers\PaymentComponentServiceProvider::class,
+        \App\Providers\LogComponentServiceProvider::class,
 
         /*
          * Package Service Providers...

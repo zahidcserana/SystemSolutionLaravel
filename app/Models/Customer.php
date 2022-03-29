@@ -26,6 +26,10 @@ class Customer extends Model
 
     protected $guarded = [];
 
+    protected $attributes = [
+        'billing_type' => self::BILL_TYPE_MONTHLY
+    ];
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);

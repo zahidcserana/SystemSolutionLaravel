@@ -28,6 +28,10 @@ class Invoice extends Model
         'status',
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_PENDING
+    ];
+
     public static $billTypeValues = [
         self::BILL_TYPE_MONTHLY => 'Monthly',
         self::BILL_TYPE_YEARLY => 'Yearly',
@@ -36,7 +40,7 @@ class Invoice extends Model
 
     public function setStatus()
     {
-        $status = $this->paid == 0 ? 'pending' : ($this->paid == $this->amount ? 'paid' : 'due');
+        $status = $this->paid == 0 ? self::STATUS_PENDING : ($this->paid == $this->amount ? self::STATUS_PAID : self::STATUS_DUE);
 
         $this->status = $status;
         $this->save();

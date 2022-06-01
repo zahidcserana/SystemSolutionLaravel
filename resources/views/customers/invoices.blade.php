@@ -160,12 +160,16 @@
                 <table class="invoice-desc-body" style="width: 100%">
                     <tr>
                         <td>Invoice Date</td>
-                        <td>: {{ Carbon\Carbon::parse($invoice->created_at)->format('d/m/Y') }}</td>
+                        <td>: {{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
                     </tr>
                     <tr>
+                        <td>Amount</td>
+                        <td>: {{ $invoices->sum('amount') }}</td>
+                    </tr>
+                    {{-- <tr>
                         <td>Previouse Balance</td>
                         <td>: {{ format_amount($customer->balance) }}</td>
-                    </tr>
+                    </tr> --}}
                 </table>
             </div>
         </div>

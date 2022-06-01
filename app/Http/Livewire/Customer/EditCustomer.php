@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use Livewire\Component;
 use App\Models\Customer;
@@ -20,6 +20,6 @@ class EditCustomer extends ModalComponent
 
     public function render()
     {
-        return view('livewire.edit-customer');
+        return view('livewire.customer.edit-customer');
     }
 }

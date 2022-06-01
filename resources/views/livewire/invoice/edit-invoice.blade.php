@@ -38,9 +38,25 @@
                         </label>
                         <label class="mt-2 block">
                             <span class="text-gray-700">Billing Type: </span>
-                            {{ __(\Illuminate\Support\Arr::get(\App\Models\Invoice::$billTypeValues, $invoice->type, 'N/A')) }}
+                            {{ __(\Illuminate\Support\Arr::get(\App\Models\Invoice::INVOICE_TYPE, $invoice->type, 'N/A')) }}
                         </label>
-
+                        <label class="mt-2 block">
+                            <span class="text-gray-700">Status</span>
+                            <select
+                                class="
+                                        block
+                                        w-full
+                                        mt-1
+                                        rounded-md
+                                        border-gray-300
+                                        shadow-sm
+                                        focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    " name="status">
+                                    @foreach(\App\Models\Invoice::INVOICE_STATUS as $key => $value)
+                                        <option {{ $invoice->status == $key ? "selected='selected'" : "" }} value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                            </select>
+                        </label>
                         <x-button class="mt-4 ml-3">{{ __('Submit') }}</x-button>
                     </form>
                 </div>

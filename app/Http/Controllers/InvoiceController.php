@@ -88,4 +88,9 @@ class InvoiceController extends Controller
 
         return back()->with('success', 'Invoice successfully deleted.');
     }
+
+    public function print(Invoice $invoice)
+    {
+        return view('invoices.print', ['invoice' => $invoice]);
+    }
 }

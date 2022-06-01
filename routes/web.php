@@ -27,5 +27,7 @@ require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('customer', CustomerController::class);
+
     Route::resource('invoice', InvoiceController::class);
+    Route::get('invoice/{invoice}/print', [InvoiceController::class, 'print'])->name('invoice.print');
 });

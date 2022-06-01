@@ -32,10 +32,22 @@ class Invoice extends Model
         'status' => self::STATUS_PENDING
     ];
 
-    public static $billTypeValues = [
+    const INVOICE_TYPE = [
         self::BILL_TYPE_MONTHLY => 'Monthly',
         self::BILL_TYPE_YEARLY => 'Yearly',
         self::BILL_TYPE_ONETIME => 'Onetime',
+    ];
+
+    const INVOICE_STATUS = [
+        self::STATUS_PENDING => 'Pending',
+        self::STATUS_DUE => 'Due',
+        self::STATUS_PAID => 'Paid',
+    ];
+
+    const INVOICE_TYPES = [
+        ["key" => self::BILL_TYPE_MONTHLY, "value" => self::INVOICE_TYPE[self::BILL_TYPE_MONTHLY]],
+        ["key" => self::BILL_TYPE_YEARLY, "value" => self::INVOICE_TYPE[self::BILL_TYPE_YEARLY]],
+        ["key" => self::BILL_TYPE_ONETIME, "value" => self::INVOICE_TYPE[self::BILL_TYPE_ONETIME]],
     ];
 
     public function setStatus()

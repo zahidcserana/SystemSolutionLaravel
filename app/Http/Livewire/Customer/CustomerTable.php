@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
+use NumberFormatter;
 use App\Models\Customer;
-use App\Models\Invoice;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -14,9 +15,11 @@ use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 
-class InvoiceTable extends PowerGridComponent
+class CustomerTable extends PowerGridComponent
 {
     use ActionButton;
+
+    public string $type;
 
     /*
     |--------------------------------------------------------------------------
@@ -28,6 +31,7 @@ class InvoiceTable extends PowerGridComponent
     public function setUp()
     {
         $this->showCheckBox()
+            ->showRecordCount('full')
             ->showPerPage()
             ->showExportOption('download', ['excel', 'csv'])
             ->showSearchInput();
@@ -42,7 +46,8 @@ class InvoiceTable extends PowerGridComponent
     */
     public function datasource(): ?Builder
     {
-        return Invoice::query();
+        return Customer::query();
+        // return Customer::query()->where('type', $this->type);
     }
 
     /*
@@ -55,6 +60,13 @@ class InvoiceTable extends PowerGridComponent
     public function relationSearch(): array
     {
         return [];
+
+        // return [
+        //     'store' => [ // relationship on dishes model
+        //         'name', // column enabled to search
+        //     ],
+        //     //...
+        // ];
     }
 
     /*
@@ -67,29 +79,22 @@ class InvoiceTable extends PowerGridComponent
     */
     public function addColumns(): ?PowerGridEloquent
     {
+        $fmt = new NumberFormatter('en-US', NumberFormatter::CURRENCY);
+
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('customer_id')
-            ->addColumn('type')
-            ->addColumn('for_date_formatted', function (Invoice $model) {
-                if ($model->type == 'monthly') {
-                    return Carbon::parse($model->for_date)->format('M-Y');
-                } else if ($model->type == 'yearly') {
-                    return Carbon::parse($model->for_date)->format('Y');
-                }
-
-                return Carbon::parse($model->for_date)->format('d-M-Y');
+            ->addColumn('name')
+            ->addColumn('active')
+            ->addColumn('billing_type', function (Customer $model) {
+                return ucfirst($model->billing_type);
             })
-            ->addColumn('customer', function (Invoice $model) {
-                return $model->customer->name;
+            ->addColumn('balance', function (Customer $model) use ($fmt) {
+                return $fmt->formatCurrency($model->balance, "BDT");
             })
-            ->addColumn('amount')
-            ->addColumn('paid')
-            ->addColumn('status')
-            ->addColumn('created_at_formatted', function (Invoice $model) {
-                return Carbon::parse($model->created_at)->format('d/m/Y');
+            ->addColumn('created_at_formatted', function (Customer $model) {
+                return Carbon::parse($model->created_at)->format('d/m/Y H:i:s');
             })
-            ->addColumn('updated_at_formatted', function (Invoice $model) {
+            ->addColumn('updated_at_formatted', function (Customer $model) {
                 return Carbon::parse($model->updated_at)->format('d/m/Y H:i:s');
             });
     }
@@ -104,6 +109,16 @@ class InvoiceTable extends PowerGridComponent
     */
     public function columns(): array
     {
+        $types = new Collection([
+            ["key" => "monthly", "value" => "Monthly"],
+            ["key" => "both", "value" => "Both"],
+            ["key" => "onetime", "value" => "Onetime"],
+            ["key" => "yearly", "value" => "Yearly"]
+        ]);
+
+        $canEdit = true; //User has edit permission
+        $canCopy = true;
+
         return [
             Column::add()
                 ->title(__('ID'))
@@ -111,49 +126,60 @@ class InvoiceTable extends PowerGridComponent
                 ->makeInputRange(),
 
             Column::add()
-                ->title(__('CUSTOMER'))
-                ->field('customer')
-                ->makeInputSelect(Customer::all(), 'name', 'customer_id'),
-
-            Column::add()
-                ->title(__('TYPE'))
-                ->field('type')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
-
-            Column::add()
-                ->title(__('FOR DATE'))
-                ->field('for_date_formatted')
+                ->title(__('Name'))
+                ->field('name')
                 ->searchable()
                 ->sortable()
-                ->makeInputDatePicker('for_date'),
+                ->makeInputText()
+                ->editOnClick($canEdit),
 
             Column::add()
-                ->title(__('AMOUNT'))
-                ->field('amount')
-                ->sortable()
-                ->searchable(),
-
-            Column::add()
-                ->title(__('PAID'))
-                ->field('paid')
-                ->sortable()
-                ->searchable(),
-
-            Column::add()
-                ->title(__('STATUS'))
-                ->field('status')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
-
-            Column::add()
-                ->title(__('CREATED AT'))
-                ->field('created_at_formatted')
+                ->title(__('Email'))
+                ->field('email')
                 ->searchable()
                 ->sortable()
-                ->makeInputDatePicker('created_at'),
+                ->makeInputText()
+                ->clickToCopy($canCopy, 'Copy to clipboard'),
+
+
+            Column::add()
+                ->title(__('Active'))
+                ->field('active')
+                ->searchable()
+                ->sortable()
+                ->makeBooleanFilter('active', 'Active', 'Inactive')
+                ->toggleable($canEdit, 'yes', 'no'),
+
+            Column::add()
+                ->title(__('Billing Type'))
+                ->field('billing_type')
+                ->searchable()
+                ->sortable()
+                ->makeInputSelect($types, 'key', 'value')
+                ->bodyAttribute('text-center', 'color:red')
+                ->headerAttribute('text-center', 'color:red'),
+
+
+            Column::add()
+                ->title(__('Balance'))
+                ->field('balance')
+                ->makeInputRange(),
+
+
+            // Column::add()
+            //     ->title(__('CREATED AT'))
+            //     ->field('created_at_formatted')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker('created_at'),
+
+            // Column::add()
+            //     ->title(__('UPDATED AT'))
+            //     ->field('updated_at_formatted')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker('updated_at')
+            //     ->hidden(),
 
         ];
     }
@@ -169,24 +195,28 @@ class InvoiceTable extends PowerGridComponent
 
     public function actions(): array
     {
+        $canClickButton = true;
+
         return [
-            Button::add('edit-invoice')
+            Button::add('edit')
+                ->caption(__('Edit'))
+                ->class('bg-indigo-500 text-white')
+                ->target('_self')
+                ->route('customer.edit', ['customer' => 'id']),
+
+            Button::add('edit-customer')
                 ->caption('Edit')
                 ->class('bg-gray-300')
-                ->openModal('edit-invoice', ['invoice' => 'id'])
+                ->openModal('customer.edit-customer', ['customer' => 'id'])
                 ->method('put')
-                ->route('invoice.edit', ['invoice' => 'id'])
-                ->can(true),
+                ->route('customer.edit', ['customer' => 'id'])
+                ->can($canClickButton),
 
-            //    Button::add('edit')
-            //        ->caption(__('Edit'))
-            //        ->class('bg-indigo-500 text-white')
-            //        ->route('invoice.edit', ['invoice' => 'id']),
 
             Button::add('destroy')
                 ->caption(__('Delete'))
                 ->class('bg-red-500 text-white')
-                ->route('invoice.destroy', ['invoice' => 'id'])
+                ->route('customer.destroy', ['customer' => 'id'])
                 ->method('delete')
         ];
     }
@@ -200,16 +230,22 @@ class InvoiceTable extends PowerGridComponent
     |
     */
 
-    public function update(array $data ): bool
+
+    public function update(array $data): bool
     {
-       try {
-           $updated = Invoice::query()->find($data['id'])->update([
+        try {
+            $updated = Customer::query()->find($data['id'])->update([
                 $data['field'] => $data['value']
-           ]);
-       } catch (QueryException $exception) {
-           $updated = false;
-       }
-       return $updated;
+            ]);
+        } catch (QueryException $exception) {
+            $updated = false;
+        }
+
+        if ($updated) {
+            $this->fillData();
+        }
+
+        return $updated;
     }
 
     public function updateMessages(string $status, string $field = '_default_message'): string
@@ -218,15 +254,18 @@ class InvoiceTable extends PowerGridComponent
             'success'   => [
                 '_default_message' => __('Data has been updated successfully!'),
                 //'custom_field' => __('Custom Field updated successfully!'),
+                'name' => __('Customer name has been updated successfully!'),
             ],
             'error' => [
                 '_default_message' => __('Error updating the data.'),
+                'balance' => __('Error updating the balance.'),
                 //'custom_field' => __('Error updating custom field.'),
             ]
         ];
 
         return ($updateMessages[$status][$field] ?? $updateMessages[$status]['_default_message']);
     }
+
 
     public function template(): ?string
     {

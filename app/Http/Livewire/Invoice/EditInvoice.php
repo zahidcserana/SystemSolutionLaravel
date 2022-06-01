@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Invoice;
 
 use Livewire\Component;
 use App\Models\Customer;
@@ -21,6 +21,6 @@ class EditInvoice extends ModalComponent
 
     public function render()
     {
-        return view('livewire.edit-invoice');
+        return view('livewire.invoice.edit-invoice');
     }
 }

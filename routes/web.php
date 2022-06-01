@@ -30,4 +30,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('invoice', InvoiceController::class);
     Route::get('invoice/{invoice}/print', [InvoiceController::class, 'print'])->name('invoice.print');
+    Route::get('customer/{customer}/invoices', [CustomerController::class, 'invoices'])->name('customer.invoices');
 });

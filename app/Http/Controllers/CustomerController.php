@@ -55,4 +55,13 @@ class CustomerController extends Controller
 
         return back()->with('success', 'Customer successfully deleted.');
     }
+
+    public function invoices(Customer $customer)
+    {
+        if ($customer->dueInvoices) {
+            return view('customers.invoices', ['customer' => $customer, 'invoices' => $customer->dueInvoices, 'invoice' => $customer->dueInvoices->first()]);
+        }
+
+        return back()->with('success', 'Customer has no unpaid invoice.');
+    }
 }

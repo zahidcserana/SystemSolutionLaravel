@@ -19,7 +19,7 @@ class CustomerTable extends PowerGridComponent
 {
     use ActionButton;
 
-    public string $type;
+    public $type;
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ class CustomerTable extends PowerGridComponent
             Column::add()
                 ->title(__('ID'))
                 ->field('id')
-                ->makeInputRange(),
+                ->makeInputText(),
 
             Column::add()
                 ->title(__('Name'))
@@ -214,8 +214,8 @@ class CustomerTable extends PowerGridComponent
                 ->caption('Edit')
                 ->class('bg-gray-300')
                 ->openModal('customer.edit-customer', ['customer' => 'id'])
-                ->method('put')
-                ->route('customer.edit', ['customer' => 'id'])
+//                ->method('get')
+//                ->route('customer.edit', ['customer' => 'id'])
                 ->can($canClickButton),
 
 

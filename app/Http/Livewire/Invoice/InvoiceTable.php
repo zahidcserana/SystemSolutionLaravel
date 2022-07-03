@@ -183,8 +183,8 @@ class InvoiceTable extends PowerGridComponent
                 ->caption('Edit')
                 ->class('bg-gray-300')
                 ->openModal('invoice.edit-invoice', ['invoice' => 'id'])
-                ->method('put')
-                ->route('invoice.edit', ['invoice' => 'id'])
+//                ->method('get')
+//                ->route('invoice.edit', ['invoice' => 'id'])
                 ->can(true),
 
             Button::add('print')

@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-    darkMode: "class",
+    // darkMode: "class",
 
     purge: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",

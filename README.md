@@ -1,9 +1,8 @@
 ## Client Management System
-
 Manage clients, invoices & payments and make reports
 
 ### Next task list
-
+- Fix table design
 - **[Invoice](view by id)**
 
 ## API

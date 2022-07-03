@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 class Customers extends Component
 {
     public $customer_id;
-    public Customer $customer;
+    public $customer;
     public $update = false;
     public $billTypes;
 

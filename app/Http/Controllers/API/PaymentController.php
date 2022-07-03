@@ -29,7 +29,7 @@ class PaymentController extends BaseController
         $collection->when($request->customer_id, function ($q) use ($request) {
             return $q->where('customer_id', $request['customer_id']);
         });
-        $collection->when($request->method, function ($q) use ($request) {
+        $collection->when($request['method'], function ($q) use ($request) {
             return $q->where('method', 'like', '%' . $request['method'] . '%');
         });
 

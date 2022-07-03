@@ -39,4 +39,16 @@ class Customer extends Model
     {
         return $this->invoices()->where('status', '<>', Invoice::STATUS_PAID);
     }
+
+    public function balanceUpdate()
+    {
+        $due = 0;
+
+        foreach ($this->dueInvoices as $invoice) {
+            $due += $invoice->amount - $invoice->paid;
+        }
+
+        $this->balance = $due;
+        $this->update();
+    }
 }

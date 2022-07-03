@@ -17,6 +17,7 @@ class InvoiceComponent extends BaseComponent
         $invoice = Invoice::create($input);
         $invoice->setStatus();
         $invoice->refresh();
+        $invoice->customer->balanceUpdate();
 
         return $invoice;
     }
@@ -28,6 +29,7 @@ class InvoiceComponent extends BaseComponent
         $invoice->update($input);
         $invoice->setStatus();
         $invoice->refresh();
+        $invoice->customer->balanceUpdate();
 
         return $invoice;
     }

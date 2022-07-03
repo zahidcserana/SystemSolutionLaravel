@@ -87,6 +87,7 @@ class PaymentComponent extends BaseComponent
             $payment->refresh();
         }
 
+        $payment->customer->balanceUpdate();
         return $payment;
     }
 }

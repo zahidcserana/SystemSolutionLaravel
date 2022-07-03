@@ -24,6 +24,14 @@ return [
         'phone' => '',
         'mobile' => '01708-887754',
         'email' => 'analyticalzahid@gmail.com',
+        'images' => [
+            'logo' => 'images/sm-analyticalj.jpg',
+            'reload' => 'assets/vendors/images/aj/reload.png',
+            'top' => 'assets/vendors/images/analytical-logo.png',
+            'profile' => 'assets/vendors/images/aj/profile.png',
+            'sidebar' => 'assets/vendors/images/aj/sidebar.png',
+            'header' => 'assets/vendors/images/aj/header.png',
+        ],
     ],
 
     'expenseType' => [

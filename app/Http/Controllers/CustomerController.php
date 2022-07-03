@@ -58,10 +58,10 @@ class CustomerController extends Controller
 
     public function invoices(Customer $customer)
     {
-        if ($customer->dueInvoices) {
+        if ($customer->dueInvoices->count()) {
             return view('customers.invoices', ['customer' => $customer, 'invoices' => $customer->dueInvoices, 'invoice' => $customer->dueInvoices->first()]);
         }
 
-        return back()->with('success', 'Customer has no unpaid invoice.');
+        return back()->with('error', 'Customer has no unpaid invoice.');
     }
 }

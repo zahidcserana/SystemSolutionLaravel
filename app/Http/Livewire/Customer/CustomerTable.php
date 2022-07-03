@@ -207,7 +207,7 @@ class CustomerTable extends PowerGridComponent
             Button::add('invoice')
                 ->caption(__('Invoice'))
                 ->class('bg-indigo-500 text-white')
-                ->target('_self')
+                ->target('_blank')
                 ->route('customer.invoices', ['customer' => 'id']),
 
             Button::add('edit-customer')

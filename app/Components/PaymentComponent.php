@@ -49,7 +49,7 @@ class PaymentComponent extends BaseComponent
                 $paidAmount = 0;
                 $dueAmount = $invoice->amount - $invoice->paid;
 
-                if ($amount > $dueAmount) {
+                if ($amount >= $dueAmount) {
                     $paidAmount = $dueAmount;
                     $status = Invoice::STATUS_PAID;
                 } else {

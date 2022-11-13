@@ -96,7 +96,7 @@
                 <table class="invoice-desc-body" style="width: 100%">
                     <tr>
                         <td>Invoice No</td>
-                        <td>: <strong style="font-size: 11px">{{ $invoice->id }}</strong></td>
+                        <td>: <strong style="font-size: 11px">{{ $invoiceNo }}</strong></td>
                     </tr>
                     <tr>
                         <td>Name</td>

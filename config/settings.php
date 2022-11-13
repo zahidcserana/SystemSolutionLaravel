@@ -42,7 +42,7 @@ return [
         'others' => 'Others',
     ],
 
-    'invoice_size' => 6,
+    'invoice_size' => 10,
     'receipt_size' => 6,
     'logo' => [
         'reload' => 'assets/vendors/images/aj/reload.png',

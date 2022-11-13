@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Http\Requests\Customer\StoreRequest;
 
 class CustomerController extends Controller
 {
@@ -59,7 +58,14 @@ class CustomerController extends Controller
     public function invoices(Customer $customer)
     {
         if ($customer->dueInvoices->count()) {
-            return view('customers.invoices', ['customer' => $customer, 'invoices' => $customer->dueInvoices, 'invoice' => $customer->dueInvoices->first()]);
+            $data = [
+                'invoiceNo' => sprintf("%0" . config("settings.invoice_size") . "d", date('dmY')),
+                'customer' => $customer,
+                'invoice' => $customer->dueInvoices->first(),
+                'invoices' => $customer->dueInvoices,
+            ];
+
+            return view('customers.invoices', $data);
         }
 
         return back()->with('error', 'Customer has no unpaid invoice.');

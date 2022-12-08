@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td>Date</td>
-                        <td>: {{ \Carbon\Carbon::parse($invoice->created_at)->format('M j, Y')}}</td>
+                        <td>: {{ \Carbon\Carbon::now()->format('M j, Y')}}</td>
                     </tr>
                     <tr>
                         <td>Status</td>

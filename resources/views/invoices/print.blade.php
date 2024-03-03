@@ -88,7 +88,7 @@
     <div class="invoice-box" id="invoice-box">
         <div style="display: flex;width: 100%">
             <div style="flex: 1; width: 100%;">
-                <img src="{{ asset('images/sm-analyticalj.jpg') }}" alt="analyticalj">
+                <img src="{{ asset('images/aj/logo-p.png') }}" alt="analyticalj">
             </div>
         </div>
         <div style="display: flex;width: 100%;margin-bottom: 10px;">

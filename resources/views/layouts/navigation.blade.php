@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ Config::get('settings.company.images.logo') }}" alt="">
+                        <img src="{{ Config::get('settings.company.images.logo') }}" alt="" width="50" height="20">
 {{--                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />--}}
                     </a>
                 </div>
@@ -37,6 +37,23 @@
                         </x-mynav-link>
                         <x-mynav-link class="dropdown-item" :href="route('customer.index')">
                             {{ __('Customer') }}
+                        </x-mynav-link>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.875rem; font-weight: 500; padding-top: 15px;" class="nav-item dropdown hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Data
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <x-mynav-link class="dropdown-item" :href="route('data.backup')">
+                            {{ __('Backup') }}
+                        </x-mynav-link>
+                        <x-mynav-link class="dropdown-item" :href="route('data.download')">
+                            {{ __('Download') }}
+                        </x-mynav-link>
+                        <x-mynav-link class="dropdown-item" :href="route('data.email')">
+                            {{ __('Email') }}
                         </x-mynav-link>
                     </div>
                 </div>

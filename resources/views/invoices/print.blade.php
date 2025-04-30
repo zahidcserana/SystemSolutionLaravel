@@ -133,7 +133,7 @@
                     <tr>
                         <th>No</th>
                         <th>Type</th>
-                        <th>For Month</th>
+                        <th>Month</th>
                         <th>Amount</th>
                     </tr>
                 </thead>

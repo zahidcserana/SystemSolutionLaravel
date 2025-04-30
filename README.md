@@ -10,6 +10,10 @@ Manage clients, invoices & payments and make reports
 - **[Customer](list: search by term)**
 - **[Payment](CRUD: backend, frontend)**
 
-# New feature to add
+# New feature added
 - backup data
+
+
+# New feature to add
+- Email Bill
 - 

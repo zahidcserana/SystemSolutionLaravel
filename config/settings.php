@@ -5,7 +5,7 @@ return [
     'title' => 'Account Management System',
     'company' => [
         'title' => 'AnalyticalJ',
-        'name' => 'Analytical Journey',
+        'name' => 'AnalyticalJ',
         'email' => 'analyticalzahid@gmail.com',
         'city' => 'Dhaka',
         'phone' => '',

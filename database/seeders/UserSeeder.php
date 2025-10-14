@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         
         $sadmin =  User::factory()->create([
             'id' => 1,
-            'name' => 'Analytical Journey',
+            'name' => 'AnalyticalJ',
             'email' => 'admin@analytical.com',
             'password' => Hash::make('aj$21'),
             'observe' => Carbon::now()->addMonths(12),
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
 
         $admin =  User::factory()->create([
             'id' => 2,
-            'name' => 'Analytical Journey',
+            'name' => 'AnalyticalJ',
             'email' => 'cms@analytical.com',
             'observe' => Carbon::now()->addMonths(1),
             'type' => User::ROLE_ADMINISTRATOR,
